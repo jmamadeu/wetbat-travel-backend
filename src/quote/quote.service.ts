@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { Quote } from 'prisma/prisma-client';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class QuoteService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  findAll(): string[] {
-    return ['Quote 1', 'Quote 2', 'Quote 4'];
+  findAll() {
+    return this.prismaService.quote.findMany();
+  }
+
+  create(createQuoteDto: Omit<Quote, 'id'>): Promise<Quote> {
+    console.log(createQuoteDto);
+    return this.prismaService.quote.create({
+      data: createQuoteDto,
+    });
   }
 }
