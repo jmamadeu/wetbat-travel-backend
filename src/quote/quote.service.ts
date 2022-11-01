@@ -11,9 +11,16 @@ export class QuoteService {
   }
 
   create(createQuoteDto: Omit<Quote, 'id'>): Promise<Quote> {
-    console.log(createQuoteDto);
     return this.prismaService.quote.create({
       data: createQuoteDto,
+    });
+  }
+
+  findOneById(id: string) {
+    return this.prismaService.quote.findFirst({
+      where: {
+        id,
+      },
     });
   }
 }

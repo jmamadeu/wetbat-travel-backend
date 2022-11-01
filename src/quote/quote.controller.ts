@@ -1,9 +1,8 @@
+/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
-  Get,
-  Post,
-  UsePipes,
+  Get, Param, ParseUUIDPipe, Post, UsePipes,
   ValidationPipe
 } from '@nestjs/common';
 import { CreateQuoteDto } from './dto/create-quote.dto';
@@ -33,4 +32,10 @@ export class QuoteController {
 
     return response;
   }
+
+  @Get(":id")
+  findOne(@Param('id', ParseUUIDPipe ) id: string) {
+    return this.quoteService.findOneById(id)
+  }
+
 }
